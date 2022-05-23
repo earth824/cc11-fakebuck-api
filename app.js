@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 
+const authRouter = require('./routes/authRoute');
 const notFoundMiddleware = require('./middlewares/notFound');
 const errorMiddleware = require('./middlewares/error');
 
@@ -18,6 +19,8 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use('/auth', authRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
