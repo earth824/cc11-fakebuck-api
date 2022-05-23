@@ -8,9 +8,11 @@ const errorMiddleware = require('./middlewares/error');
 
 const app = express();
 app.use(cors());
+
 if (process.env.NODE_ENV === 'DEVELOPMENT') {
   app.use(morgan('dev'));
 }
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
