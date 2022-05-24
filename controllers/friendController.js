@@ -8,13 +8,13 @@ exports.getAllFriend = async (req, res, next) => {
   try {
     const { status } = req.query;
     let users = [];
-    if (status.toUpperCase() === 'UNKNOWN') {
+    if (status?.toUpperCase() === 'UNKNOWN') {
       // **** FIND UNKNOWN
       users = await FriendService.findUnknown(req.user.id);
-    } else if (status.toUpperCase() === 'PENDING') {
+    } else if (status?.toUpperCase() === 'PENDING') {
       // **** FIND PENDING FRIEND
       users = await FriendService.findPendingFriend(req.user.id);
-    } else if (status.toUpperCase() === 'REQUESTED') {
+    } else if (status?.toUpperCase() === 'REQUESTED') {
       // *** FIND REQUESTED FRIEND
       users = await FriendService.findRequestFriend(req.user.id);
     } else {
