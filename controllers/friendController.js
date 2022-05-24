@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
 const createError = require('../utils/createError');
-const { Friend, User } = require('../models');
+const { Friend } = require('../models');
 const { FRIEND_ACCEPTED, FRIEND_PENDING } = require('../config/constants');
 const FriendService = require('../services/friendService');
 
