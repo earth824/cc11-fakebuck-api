@@ -66,8 +66,33 @@ exports.createLike = async (req, res, next) => {
 };
 
 exports.deleteLike = async (req, res, next) => {
+  const t = await sequelize.transaction();
   try {
+    const { postId } = req.params;
+
+    const like = await Like.findOne({
+      where: {
+        postId,
+        userId: req.user.id
+      }
+    });
+
+    if (!like) {
+      createError('you never like this post', 400);
+    }
+
+    const post = await Post.findOne({ where: { id: postId } });
+    if (!post) {
+      createError('post not found', 400);
+    }
+
+    await like.destroy({ transaction: t });
+    await post.decrement({ like: 1 }, { transaction: t });
+    await t.commit();
+
+    res.status(204).json();
   } catch (err) {
+    await t.rollback();
     next(err);
   }
 };
